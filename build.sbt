@@ -2,9 +2,10 @@ ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.8"
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test
+libraryDependencies += "org.scalamock" %% "scalamock" % "5.2.0" % Test
+
 lazy val root = (project in file("."))
   .settings(
-    name := "bank"
+    name := "bank-scala"
   )
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test"
-libraryDependencies += "org.scalamock" %% "scalamock" % "5.1.0" % "test"
