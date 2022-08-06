@@ -1,0 +1,1 @@
+case class Transaction(amount: Double)

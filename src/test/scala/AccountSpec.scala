@@ -14,4 +14,13 @@ class AccountSpec extends AnyWordSpec with Matchers {
     }
   }
 
+  "An account" should {
+    "return the correct balance 2 deposits" in {
+      val account = new Account()
+      account.deposit(10)
+      account.deposit(20)
+      account.balance shouldEqual 30
+    }
+  }
+
 }
