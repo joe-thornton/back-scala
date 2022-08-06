@@ -8,6 +8,10 @@ class Account() {
     ledger += new Transaction(amount)
   }
 
+  def withdraw(amount: Double): Unit = {
+    ledger += new Transaction(-amount)
+  }
+
   def balance(): Double = {
     ledger.foldLeft(0.0)((balance, transaction) => balance + transaction.amount)
   }
