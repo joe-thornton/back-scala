@@ -1,5 +1,6 @@
 import java.time.LocalDate
 import scala.collection.mutable
+import scala.util.Try
 
 class Account() {
   private[this] val ledger: scala.collection.mutable.Set[Transaction] = scala.collection.mutable.Set.empty[Transaction]
@@ -9,10 +10,16 @@ class Account() {
   }
 
   def withdraw(amount: Double): Unit = {
-    ledger += new Transaction(-amount)
+    if (sufficientFunds(amount)) ledger += new Transaction(-amount)
+    else throw new Exception("Insufficient funds")
   }
 
   def balance(): Double = {
     ledger.foldLeft(0.0)((balance, transaction) => balance + transaction.amount)
+  }
+
+  private def sufficientFunds(amount: Double): Boolean = {
+    if (amount <= balance()) true
+    else false
   }
 }

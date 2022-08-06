@@ -32,4 +32,15 @@ class AccountSpec extends AnyWordSpec with Matchers {
     }
   }
 
+  "An account" should {
+    "not be able to withdraw more than its balance" in {
+      val account = new Account()
+      account.deposit(20)
+      val error = intercept[Exception] {
+        account.withdraw(30)
+      }
+      assert(error.getMessage === "Insufficient funds")
+    }
+  }
+
 }
