@@ -4,7 +4,7 @@ import org.scalamock.scalatest.MockFactory
 
 import java.time.{Clock, Instant, ZoneId}
 
-class AccountSpec extends AnyWordSpec with Matchers {
+class AccountSpec extends AnyWordSpec with Matchers with MockFactory {
 
   "An account" should {
     "return the correct balance for a single deposit" in {
@@ -39,6 +39,17 @@ class AccountSpec extends AnyWordSpec with Matchers {
         account.withdraw(30)
       }
       assert(error.getMessage === "Insufficient funds")
+    }
+  }
+
+  "An account" should {
+    "call print statement with the ledger" in {
+      val mockStatement = mock[StatementBase]
+      val account = new Account(mockStatement)
+      val mockLedger = scala.collection.mutable.Set(Transaction(10))
+      account.deposit(10)
+      (mockStatement.print _).expects(mockLedger)
+      account.printStatement()
     }
   }
 

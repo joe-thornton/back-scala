@@ -1,8 +1,7 @@
 import java.time.LocalDate
 import scala.collection.mutable
-import scala.util.Try
 
-class Account() {
+class Account(val statement: StatementBase = StatementGenerator) {
   private[this] val ledger: scala.collection.mutable.Set[Transaction] = scala.collection.mutable.Set.empty[Transaction]
 
   def deposit(amount: Double): Unit = {
@@ -16,6 +15,10 @@ class Account() {
 
   def balance(): Double = {
     ledger.foldLeft(0.0)((balance, transaction) => balance + transaction.amount)
+  }
+
+  def printStatement(): Unit = {
+    statement.print(ledger: scala.collection.mutable.Set[Transaction])
   }
 
   private def sufficientFunds(amount: Double): Boolean = {
