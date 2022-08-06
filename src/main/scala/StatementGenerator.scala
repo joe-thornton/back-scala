@@ -6,7 +6,7 @@ trait StatementBase {
 
 object StatementGenerator extends StatementBase {
   def print(ledger: scala.collection.mutable.Set[Transaction]): String = {
-    "Placeholder text"
+    "Amount      | Date        | Balance     "
   }
 }
 
