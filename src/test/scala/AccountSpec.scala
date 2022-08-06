@@ -1,8 +1,7 @@
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalamock.scalatest.MockFactory
-
-import java.time.{Clock, Instant, ZoneId}
+import com.github.nscala_time.time.Imports._
 
 class AccountSpec extends AnyWordSpec with Matchers with MockFactory {
 
@@ -46,8 +45,9 @@ class AccountSpec extends AnyWordSpec with Matchers with MockFactory {
     "call print statement with the ledger" in {
       val mockStatement = mock[StatementBase]
       val account = new Account(mockStatement)
-      val mockLedger = scala.collection.mutable.Set(Transaction(10))
-      account.deposit(10)
+      val transactionDate = new LocalDateTime("2022-07-27T11:39:45.618")
+      val mockLedger = scala.collection.mutable.Set(Transaction(10, transactionDate))
+      account.deposit(10, transactionDate)
       (mockStatement.print _).expects(mockLedger)
       account.printStatement()
     }
