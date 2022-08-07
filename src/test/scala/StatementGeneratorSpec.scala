@@ -27,11 +27,7 @@ class StatementGeneratorSpec extends AnyWordSpec with Matchers with MockFactory 
       val mockTransaction2 = Transaction(50, new LocalDateTime("2022-07-28T11:39:45.618"))
       val mockTransaction3 = Transaction(200, new LocalDateTime("2022-07-26T11:39:45.618"))
       val mockLedger = scala.collection.mutable.ArrayBuffer(mockTransaction1, mockTransaction2, mockTransaction3)
-      val expectedString = s"""Amount | Date | Balance
-      200.00 | 26/07/22 | 200.00
-      -100.00 | 27/07/22 | 100.00
-      50.00 | 28/07/22 | 150.00
-      """
+      val expectedString = "Amount | Date | Balance\n200.00 | 26/07/22 | 200.00\n-100.00 | 27/07/22 | 100.00\n50.00 | 28/07/22 | 150.00\n"
       StatementGenerator.print(mockLedger) shouldEqual expectedString
     }
   }
