@@ -2,20 +2,28 @@ import scala.collection.mutable
 import com.github.nscala_time.time.Imports._
 
 trait StatementBase {
-  def print(ledger: scala.collection.mutable.Set[Transaction]): String
+  def print(ledger: scala.collection.mutable.ArrayBuffer[Transaction]): String
 }
 
 object StatementGenerator extends StatementBase {
-  def print(ledger: scala.collection.mutable.Set[Transaction]): String = {
-    val header: String = "Amount, Date, Balance\n"
+  def print(ledger: scala.collection.mutable.ArrayBuffer[Transaction]): String = {
+    val header: String = "Amount | Date | Balance\n"
     val transactionLines: String = printLedger(ledger)
     val text = header.concat(transactionLines)
     text
   }
 
-  private[this] def printLedger(ledger: scala.collection.mutable.Set[Transaction]): String = {
+  private[this] def printLedger(ledger: scala.collection.mutable.ArrayBuffer[Transaction]): String = {
     if (ledger.isEmpty) ""
-    else f"${ledger.head.amount}%.2f | ${dateTimeString(ledger.head.dateAndTime)} | ${ledger.head.amount}%.2f\n"
+    else ledgerWithRunningBalance(ledger)
+  }
+
+  private[this] def ledgerWithRunningBalance(ledger: scala.collection.mutable.ArrayBuffer[Transaction]): String = {
+    var balance: Double = 0
+    ledger.sortBy(_.dateAndTime).map(transaction => {
+      balance += transaction.amount
+      f"${transaction.amount}%.2f | ${dateTimeString(transaction.dateAndTime)} | ${balance}%.2f\n"
+    }).mkString("")
   }
 
   private[this] def dateTimeString(dateAndTime: LocalDateTime): String = {

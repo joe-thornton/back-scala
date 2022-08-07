@@ -46,7 +46,7 @@ class AccountSpec extends AnyWordSpec with Matchers with MockFactory {
       val mockStatement = mock[StatementBase]
       val account = new Account(mockStatement)
       val transactionDate = new LocalDateTime("2022-07-27T11:39:45.618")
-      val mockLedger = scala.collection.mutable.Set(Transaction(10, transactionDate))
+      val mockLedger = scala.collection.mutable.ArrayBuffer(Transaction(10, transactionDate))
       account.deposit(10, transactionDate)
       (mockStatement.print _).expects(mockLedger)
       account.printStatement()
