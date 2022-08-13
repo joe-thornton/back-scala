@@ -1,8 +1,8 @@
-import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import com.github.nscala_time.time.Imports._
 
 class Account(val statement: StatementBase = StatementGenerator) {
-  private[this] val ledger: scala.collection.mutable.ArrayBuffer[Transaction] = scala.collection.mutable.ArrayBuffer.empty[Transaction]
+  private[this] val ledger: ArrayBuffer[Transaction] = ArrayBuffer.empty[Transaction]
 
   def deposit(amount: Double, dateAndTime: LocalDateTime = LocalDateTime.now()): Unit = {
     ledger += new Transaction(amount, dateAndTime)
@@ -18,7 +18,7 @@ class Account(val statement: StatementBase = StatementGenerator) {
   }
 
   def printStatement(): Unit = {
-    statement.print(ledger: scala.collection.mutable.ArrayBuffer[Transaction])
+    statement.print(ledger: ArrayBuffer[Transaction])
   }
 
   private def sufficientFunds(amount: Double): Boolean = {
